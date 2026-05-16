@@ -4,124 +4,42 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Admin Home</title>
-<style>
-body {
-    margin: 0;
-    padding: 0;
-    background-image: url("../images/bg1.jpg");
-    background-size: cover;
-}
-
-.container {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-}
-
-header {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-h1 {
-    font-size: 48px;
-    color: #333;
-}
-
-h2 {
-    font-size: 30px;
-    color: #A2FF86;
-    margin: 10px 0;
-}
-
-h3 {
-    font-size: 30px;
-    color: #F94C10;
-    margin: 10px 0;
-}
-
-main {
-    text-align: center;
-}
-
-.buttons {
-    margin: 20px 0;
-}
-
-.button {
-    font-family: "Open Sans", sans-serif;
-    margin: 5px;
-    font-size: 20px;
-    letter-spacing: 2px;
-    color: #000;
-    padding: 0.35em 0.8em;
-    box-shadow: 1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px, 4px 4px 0px 0px, 5px 5px 0px 0px;
-    position: relative;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
-    text-decoration: none;
-    text-transform: uppercase;
-    cursor: pointer;
-    border: 5px solid;
-    color: #000;
-    font-size: 20px;
-}
-
-.button:active {
-    box-shadow: 0px 0px 0px 0px;
-    top: 5px;
-    left: 5px;
-}
-
-@media (min-width: 768px) {
-    .button {
-        padding: 0.3em 0.9em;
-    }
-}
-
-p.copyright {
-    position: absolute;
-    width: 95%;
-    color: black;
-    font-size: 20px;
-    text-align: right;
-    bottom: 0;
-}
-</style>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard | Quiz Platform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <div class="container">
-       <header>
-			<h2>${pass}</h2>
-			<h3>${fail}</h3>
-			<h1>Welcome to Quiz Application</h1>
-		</header>
-        <main>
-            <div class="buttons">
-                <a href="/admin/fetch-trainer" class="button">Approve Trainer</a>
-                <a href="/admin/fetch-student" class="button">Approve Student</a>
-                <a href="/logout" class="button">Logout</a>
-            </div>
-        </main>
-    </div>
-    <footer>
-        <p class="copyright">©Saish</p>
-    </footer>
-    <script>
+	<div class="container">
+		<div class="glass-card">
+			<header>
+				<h2 id="msg-pass">${pass}</h2>
+				<h3 id="msg-fail">${fail}</h3>
+				<h1>Admin Dashboard</h1>
+				<p style="text-align: center; color: var(--text-muted); margin-bottom: 2rem;">Manage users and system preferences</p>
+			</header>
+			<main>
+				<div class="btn-group">
+					<a href="/admin/fetch-trainer" class="btn btn-primary">Approve Trainers</a>
+					<a href="/admin/fetch-student" class="btn btn-secondary">Approve Students</a>
+					<a href="/logout" class="btn btn-outline" style="border-color: var(--error); color: var(--error);">Logout</a>
+				</div>
+			</main>
+		</div>
+	</div>
+	<footer>
+		<p>&copy; 2026 Quiz Platform. Built with passion by Saish.</p>
+	</footer>
+	<script>
 		setTimeout(function() {
-			var h2 = document.querySelector('h2');
-			var h3 = document.querySelector('h3');
-
-			if (h2 && h3) {
-				h2.style.display = 'none';
-				h3.style.display = 'none';
-			}
-		}, 1000);
+			const passMsg = document.getElementById('msg-pass');
+			const failMsg = document.getElementById('msg-fail');
+			if (passMsg) passMsg.style.display = 'none';
+			if (failMsg) failMsg.style.display = 'none';
+		}, 3000);
 	</script>
 </body>
 </html>
+

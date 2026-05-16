@@ -60,7 +60,7 @@ public class StudentService {
 			map.put("pass", "OTP Sent Success");
 			return "VerifyOtp";
 		} else {
-			if (student1 == student2) {
+			if (student1 != null && student1 == student2) {
 				if (student1.isVerified()) {
 					map.put("fail", "Account Already Exists with the above Email and Mobile");
 					map.put("student", student1);

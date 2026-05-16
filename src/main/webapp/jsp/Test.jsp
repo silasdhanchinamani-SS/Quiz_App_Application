@@ -1,16 +1,90 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="ISO-8859-1">
-    <title>Test</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Active Assessment | Quiz Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .test-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+        }
+        .timer-container {
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-family: monospace;
+            font-size: 1.25rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .question-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            transition: border-color 0.3s ease;
+        }
+        .question-card:hover {
+            border-color: var(--primary);
+        }
+        .question-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+        .option-label {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.03);
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+        .option-label:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+        .option-label input[type="radio"] {
+            width: auto;
+            margin: 0;
+        }
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 3rem 0 1.5rem 0;
+            padding-left: 1rem;
+            border-left: 4px solid var(--primary);
+        }
+        .marks-tag {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-weight: 400;
+            margin-left: 0.5rem;
+        }
+    </style>
     <script>
-        // Timer function
         function startTimer(duration, display) {
             var timer = duration, minutes, seconds;
-            setInterval(function () {
+            var interval = setInterval(function () {
                 minutes = parseInt(timer / 60, 10);
                 seconds = parseInt(timer % 60, 10);
 
@@ -20,69 +94,100 @@
                 display.textContent = minutes + ":" + seconds;
 
                 if (--timer < 0) {
-                    // Automatically submit the form after 10 minutes
+                    clearInterval(interval);
                     document.forms["testForm"].submit();
                 }
             }, 1000);
         }
 
-        // Execute the timer when the page loads
         window.onload = function () {
-            var tenMinutes = 60 * ${test.duration},
-                display = document.querySelector('#timer');
-            startTimer(tenMinutes, display);
+            var durationInMinutes = ${test.duration};
+            var display = document.querySelector('#timer');
+            startTimer(60 * durationInMinutes, display);
         };
     </script>
 </head>
 <body>
-
-    <!-- Timer Display -->
-    <div style="position: fixed; top: 10px; right: 10px;">
-        Time Remaining: <span id="timer"></span>
+    <div class="test-header">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center; padding: 0 2rem;">
+            <div>
+                <h1 style="font-size: 1.5rem; margin: 0; text-align: left;">${test.name}</h1>
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin: 0;">Batch: ${test.batchCode} | Max Marks: ${test.totalMarks}</p>
+            </div>
+            <div class="timer-container">
+                <span style="font-size: 0.8rem; opacity: 0.8;">TIME LEFT:</span>
+                <span id="timer">--:--</span>
+            </div>
+        </div>
     </div>
 
-    <h3>Test Name: ${test.name}</h3>
-    <h3>Batch Code: ${test.batchCode}</h3>
-    <h3>Total Marks: ${test.totalMarks}</h3>
-    <form id="testForm" name="testForm" action="/student/submit-test/${test.id}" method="POST">
-        <!-- MCQ Section -->
-        <c:if test="${test.mcqs != null && !test.mcqs.isEmpty()}">
-            <h2>MCQ:</h2>
-            <c:forEach var="question" items="${test.mcqs}">
-                <b>${question.question} (${question.marks}) </b>
-                <br>
-                A: <input type="radio" required="required" name="answer[${question.id}]" value="A">${question.optionA}<br>
-                B: <input type="radio" name="answer[${question.id}]" value="B">${question.optionB}<br>
-                C: <input type="radio" name="answer[${question.id}]" value="C">${question.optionC}<br>
-                D: <input type="radio" name="answer[${question.id}]" value="D">${question.optionD}<br>
-            </c:forEach>
-        </c:if>
+    <div class="container" style="max-width: 800px; padding-bottom: 5rem;">
+        <form id="testForm" name="testForm" action="/student/submit-test/${test.id}" method="POST">
+            <!-- MCQ Section -->
+            <c:if test="${test.mcqs != null && !test.mcqs.isEmpty()}">
+                <h2 class="section-title">Multiple Choice Questions</h2>
+                <c:forEach var="question" items="${test.mcqs}">
+                    <div class="question-card">
+                        <span class="question-text">${question.question} <span class="marks-tag">(${question.marks} marks)</span></span>
+                        
+                        <label class="option-label">
+                            <input type="radio" required="required" name="answer[${question.id}]" value="A">
+                            <span><strong>A:</strong> ${question.optionA}</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="answer[${question.id}]" value="B">
+                            <span><strong>B:</strong> ${question.optionB}</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="answer[${question.id}]" value="C">
+                            <span><strong>C:</strong> ${question.optionC}</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="answer[${question.id}]" value="D">
+                            <span><strong>D:</strong> ${question.optionD}</span>
+                        </label>
+                    </div>
+                </c:forEach>
+            </c:if>
 
-        <!-- True/False Section -->
-        <c:if test="${test.trueFalseQuestions != null && !test.trueFalseQuestions.isEmpty()}">
-            <h2>True False:</h2>
-            <c:forEach var="question" items="${test.trueFalseQuestions}">
-                <b>${question.question} (${question.marks}) </b>
-                <br>
-                <input type="radio" name="answer[${question.id}]" value="true" required="required"> true<br>
-                <input type="radio" name="answer[${question.id}]" value="false"> false<br>
-            </c:forEach>
-        </c:if>
+            <!-- True/False Section -->
+            <c:if test="${test.trueFalseQuestions != null && !test.trueFalseQuestions.isEmpty()}">
+                <h2 class="section-title">True or False</h2>
+                <c:forEach var="question" items="${test.trueFalseQuestions}">
+                    <div class="question-card">
+                        <span class="question-text">${question.question} <span class="marks-tag">(${question.marks} marks)</span></span>
+                        
+                        <label class="option-label">
+                            <input type="radio" name="answer[${question.id}]" value="true" required="required">
+                            <span>True</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="answer[${question.id}]" value="false">
+                            <span>False</span>
+                        </label>
+                    </div>
+                </c:forEach>
+            </c:if>
 
-        <!-- Descriptive Section -->
-        <c:if test="${test.descriptiveQuestions != null && !test.descriptiveQuestions.isEmpty()}">
-            <h2>Descriptive:</h2>
-            <c:forEach var="question" items="${test.descriptiveQuestions}">
-                <b>${question.question} (${question.marks}) </b>
-                <br>
-                <textarea cols="30" rows="3" required="required" name="answer[${question.id}]"></textarea>
-                <br>
-            </c:forEach>
-        </c:if>
+            <!-- Descriptive Section -->
+            <c:if test="${test.descriptiveQuestions != null && !test.descriptiveQuestions.isEmpty()}">
+                <h2 class="section-title">Descriptive Analysis</h2>
+                <c:forEach var="question" items="${test.descriptiveQuestions}">
+                    <div class="question-card">
+                        <span class="question-text">${question.question} <span class="marks-tag">(${question.marks} marks)</span></span>
+                        <textarea name="answer[${question.id}]" required="required" placeholder="Type your detailed answer here..." style="min-height: 150px;"></textarea>
+                    </div>
+                </c:forEach>
+            </c:if>
 
-        <!-- Submit Button -->
-        <br>
-        <button type="submit">Submit</button>
-    </form>
+            <div style="margin-top: 3rem; text-align: center;">
+                <button type="submit" class="btn btn-primary" style="padding: 1.25rem 4rem; font-size: 1.2rem;">Complete & Submit Assessment</button>
+            </div>
+        </form>
+    </div>
+    
+    <footer style="background: rgba(0,0,0,0.2); backdrop-filter: blur(4px);">
+        <p>&copy; 2026 Quiz Platform. Secure Examination Environment.</p>
+    </footer>
 </body>
 </html>

@@ -7,7 +7,6 @@ import org.jsp.quiz.dto.Batch;
 import org.jsp.quiz.dto.DescriptiveQuestion;
 import org.jsp.quiz.dto.McqQuestion;
 import org.jsp.quiz.dto.QuizTest;
-import org.jsp.quiz.dto.Student;
 import org.jsp.quiz.dto.Trainer;
 import org.jsp.quiz.dto.TrueFalseQuestion;
 import org.jsp.quiz.helper.LoginHelper;

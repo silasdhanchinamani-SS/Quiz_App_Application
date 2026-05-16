@@ -13,8 +13,12 @@ import org.springframework.ui.ModelMap;
 
 import jakarta.servlet.http.HttpSession;
 
+import java.util.Random;
+
 @Service
 public class AdminService {
+
+	private int token;
 
 	@Autowired
 	TrainerDao trainerDao;
@@ -22,8 +26,16 @@ public class AdminService {
 	@Autowired
 	StudentDao studentDao;
 
+	public String loadLogin(ModelMap map) {
+		token = new Random().nextInt(1000, 9999);
+		System.err.println("******************************");
+		System.err.println("ADMIN ACCESS TOKEN: " + token);
+		System.err.println("******************************");
+		return "AdminLogin";
+	}
+
 	public String login(LoginHelper helper, ModelMap map, HttpSession session) {
-		if (helper.getEmail().equals("admin") && helper.getPassword().equals("admin")) {
+		if (helper.getEmail().equals("admin@gmail.com") && helper.getPassword().equals(String.valueOf(token))) {
 			session.setAttribute("admin", "admin");
 			map.put("pass", "Login Success");
 			return "AdminHome";

@@ -1,134 +1,124 @@
-<%@ taglib prefix="mvc" uri="http://www.springframework.org/tags/form"%>
+﻿<%@ taglib prefix="mvc" uri="http://www.springframework.org/tags/form"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Signup</title>
+<title>Trainer Registration | Quiz Platform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
 <style>
-body {
-	font-family: Arial, sans-serif;
-	background-color: #f0f0f0;
-	margin: 0;
-	padding: 0;
-}
-
-h1 {
-	text-align: center;
-	font-size: 48px; /* Larger font size */
-	margin: 40px 0; /* Increased margin */
-}
-
-h3 {
-	text-align: center;
-	font-size: 36px; /* Larger font size */
-}
-
-form {
-	text-align: center;
-	background-color: #fff;
-	border-radius: 5px;
-	padding: 30px; /* Increased padding */
-	width: 700px;
-	margin: 0 auto;
-	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-}
-
-label {
-	display: block;
-	text-align: left;
-	margin: 10px 0; /* Increased margin */
-	font-size: 24px; /* Larger font size */
-}
-
-input[type="text"], input[type="email"], input[type="number"], input[type="password"],
-	input[type="file"] {
-	width: 100%;
-	padding: 10px; /* Larger padding */
-	margin: 10px 0; /* Increased margin */
-}
-
-input[type="radio"] {
-	margin: 0 10px; /* Increased margin */
-}
-
-#submit {
-	background-color: #0074d9;
-	color: #fff;
-	padding: 10px 20px; /* Larger padding */
-	border: none;
-	cursor: pointer;
-}
-
-#submit:hover {
-	background-color: #0056b3;
-}
+    .radio-group {
+        display: flex;
+        gap: 1.5rem;
+        padding: 0.5rem 0;
+    }
+    .radio-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+    }
+    .radio-item input {
+        width: auto;
+        margin: 0;
+    }
+    .error-msg {
+        color: var(--error);
+        font-size: 0.8rem;
+        margin-top: -1rem;
+        margin-bottom: 0.5rem;
+    }
 </style>
 </head>
 <body>
-	<h1>Trainer Signup page</h1>
-	<h2 style="color: green">${pass}</h2>
-	<h3 style="color: red">${fail}</h3>
-	<mvc:form action="/trainer/signup" method="post"
-		modelAttribute="trainer" enctype="multipart/form-data">
-		<table>
-			<tr>
-				<td><label for="name">Name:</label></td>
-				<td><mvc:input path="name" /></td>
-				<td><mvc:errors path="name" /></td>
-			</tr>
-			<tr>
-				<td><label for="email">Email:</label></td>
-				<td><mvc:input path="email" /></td>
-				<td><mvc:errors path="email" /></td>
-			</tr>
-			<tr>
-				<td><label for="mobile">Mobile:</label></td>
-				<td><mvc:input path="mobile" /></td>
-				<td><mvc:errors path="mobile" /></td>
-			</tr>
-			<tr>
-				<td><label for="password">Password:</label></td>
-				<td><mvc:password path="password" /></td>
-				<td><mvc:errors path="password" /></td>
-			</tr>
-			<tr>
-				<td><label for="subject">Subject:</label></td>
-				<td><mvc:input path="subject" /></td>
-				<td><mvc:errors path="subject" /></td>
-			</tr>
-			<tr>
-				<td><label for="eid">Employee Id:</label></td>
-				<td><mvc:input path="eid" /></td>
-			</tr>
-			<tr>
-				<td><label for="gender">Gender:</label></td>
-				<td><mvc:radiobutton path="gender" value="male" />Male <mvc:radiobutton
-						path="gender" value="female" />Female</td>
-				<td><mvc:errors path="gender" /></td>
-			</tr>
-			<tr>
-				<td><label for="picture">Picture:</label></td>
-				<td><input id="picture" type="file" name="pic"></td>
-			</tr>
-			<tr>
-				<td><a href=""><button id="submit">Create</button></a></td>
-				<td><button type="reset">Cancel</button></td>
-			</tr>
-		</table>
-		<a href="/"><button type="button">Back</button></a>
-	</mvc:form>
-	<br>
+	<div class="container">
+		<div class="glass-card" style="max-width: 600px; margin: 0 auto;">
+			<header>
+				<h2 id="msg-pass">${pass}</h2>
+				<h3 id="msg-fail">${fail}</h3>
+				<h1>Trainer Registration</h1>
+				<p style="text-align: center; color: var(--text-muted); margin-bottom: 2rem;">Apply to become a mentor and create assessments</p>
+			</header>
+			
+			<mvc:form action="/trainer/signup" method="post" modelAttribute="trainer" enctype="multipart/form-data">
+				<div class="form-group">
+					<label for="name">Full Name</label>
+					<mvc:input path="name" placeholder="Prof. Jane Smith" />
+					<div class="error-msg"><mvc:errors path="name" /></div>
+				</div>
+				
+				<div class="form-group">
+					<label for="email">Work Email</label>
+					<mvc:input path="email" placeholder="jane.smith@institution.edu" />
+					<div class="error-msg"><mvc:errors path="email" /></div>
+				</div>
+				
+				<div class="form-group">
+					<label for="mobile">Mobile Number</label>
+					<mvc:input path="mobile" placeholder="+1 234 567 890" />
+					<div class="error-msg"><mvc:errors path="mobile" /></div>
+				</div>
+				
+				<div class="form-group">
+					<label for="subject">Primary Subject</label>
+					<mvc:input path="subject" placeholder="Computer Science" />
+					<div class="error-msg"><mvc:errors path="subject" /></div>
+				</div>
+				
+				<div class="form-group">
+					<label for="eid">Employee ID</label>
+					<mvc:input path="eid" placeholder="EMP-12345" />
+				</div>
+				
+				<div class="form-group">
+					<label for="password">Security Password</label>
+					<mvc:password path="password" placeholder="••••••••" />
+					<div class="error-msg"><mvc:errors path="password" /></div>
+				</div>
+				
+				<div class="form-group">
+					<label>Gender Selection</label>
+					<div class="radio-group">
+						<label class="radio-item">
+							<mvc:radiobutton path="gender" value="male" /> Male
+						</label>
+						<label class="radio-item">
+							<mvc:radiobutton path="gender" value="female" /> Female
+						</label>
+					</div>
+					<div class="error-msg"><mvc:errors path="gender" /></div>
+				</div>
+				
+				<div class="form-group">
+					<label for="pic">Verification Photo</label>
+					<input id="pic" type="file" name="pic" accept="image/*">
+				</div>
+				
+				<div class="btn-group" style="margin-top: 1rem;">
+					<button type="submit" class="btn btn-primary" style="flex: 1;">Register as Trainer</button>
+					<button type="reset" class="btn btn-secondary">Clear</button>
+				</div>
+			</mvc:form>
+			
+			<div style="text-align: center; margin-top: 2rem;">
+				<a class="link" href="/">← Back to Home</a>
+			</div>
+		</div>
+	</div>
+	<footer>
+		<p>&copy; 2026 Quiz Platform. Built with passion by Saish.</p>
+	</footer>
 	<script>
 		setTimeout(function() {
-			var h2 = document.querySelector('h2');
-			var h3 = document.querySelector('h3');
-
-			if (h2 && h3) {
-				h2.style.display = 'none';
-				h3.style.display = 'none';
-			}
-		}, 1000);
+			const passMsg = document.getElementById('msg-pass');
+			const failMsg = document.getElementById('msg-fail');
+			if (passMsg) passMsg.style.display = 'none';
+			if (failMsg) failMsg.style.display = 'none';
+		}, 3000);
 	</script>
 </body>
 </html>

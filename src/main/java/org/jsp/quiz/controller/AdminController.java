@@ -20,8 +20,8 @@ public class AdminController {
 	AdminService adminService;
 
 	@GetMapping("/login")
-	public String loadLogin() {
-		return "AdminLogin";
+	public String loadLogin(ModelMap map) {
+		return adminService.loadLogin(map);
 	}
 
 	@GetMapping("/home")

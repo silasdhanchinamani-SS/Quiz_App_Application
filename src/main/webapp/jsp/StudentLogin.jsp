@@ -4,193 +4,55 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Student Login</title>
-<style>
-body {
-	margin: 0;
-	padding: 0;
-	background-image: url("../images/bg1.jpg");
-	background-size: cover;
-}
-
-.container {
-	max-width: 1000px;
-	margin: 0 auto;
-	padding: 20px;
-	border-radius: 10px;
-	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
-}
-
-header {
-	text-align: center;
-	margin-bottom: 20px;
-}
-
-h1 {
-	font-size: 48px;
-	color: #333;
-}
-
-h2 {
-	font-size: 30px;
-	color: #A2FF86;
-	margin: 10px 0;
-}
-
-h3 {
-	font-size: 30px;
-	color: #F94C10;
-	margin: 10px 0;
-}
-
-#login {
-	max-width: 400px;
-	margin: 0 auto;
-	border-radius: 10px;
-	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
-	padding: 20px;
-	margin-top: 20px;
-}
-
-label {
-	display: block;
-	font-size: 25px;
-}
-
-input[type="text"], input[type="password"] {
-	width: 100%;
-	font-size: 20px;
-	padding: 5px;
-	margin-top: 5px;
-	margin-bottom: 10px;
-	border: 1px solid #ccc;
-	border-radius: 5px;
-	opacity: 0.6;
-}
-
-button[type="submit"] {
-	width: 50%;
-	cursor: pointer;
-	margin-left: 100px;
-	padding: 8px 15px;
-	border-radius: 5px;
-	font-size: 20px;
-	opacity: 0.8;
-}
-
-button[type="submit"] {
-	background-color: #fff;
-	color: #005B41;
-}
-
-button[type="submit"]:hover {
-	background-color: #005B41;
-	color: #fff;
-}
-
-#forgot-password {
-	display: block;
-	text-align: Center;
-	color: black;
-	font-size: 20px;
-	margin-top: 10px;
-	margin-bottom: 10px;
-}
-
-#forgot-password:hover {
-	text-decoration: none;
-	color: red;
-}
-
-#signup {
-	display: block;
-	width: 50%;
-	text-decoration: none;
-	color: black;
-	text-align: center;
-	font-size: 20px;
-	border-radius: 5px;
-	padding: 10px 20px;
-	background-color: white;
-	margin-top: 10px;
-	margin-bottom: 10px;
-	margin-left: 85px;
-	opacity: 0.6;
-	margin-top: 10px;
-}
-
-#signup:hover {
-	background-color:#A2FF86;
-	opacity: 1;
-}
-
-#back {
-	display: block;
-	background-color: #fff;
-	text-decoration: none;
-	border-radius: 5px;
-	margin-top: 10px;
-	width: 10%;
-	margin-left: 430px;
-	color: black;
-	border: 5px;
-	padding: 10px 20px;
-	border-radius: 5px;
-	cursor: pointer;
-	font-size: 20px;
-	text-align: center;
-	opacity: 0.8;
-}
-
-#back:hover {
-	background-color: black;
-	color: #fff;
-}
-
-p.copyright {
-	width: 95%;
-	color: black;
-	font-size: 20px;
-	text-align: right;
-	bottom: 0;
-	position: absolute;
-}
-</style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Login | Quiz Platform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 	<div class="container">
-		<header>
-			<h2>${pass}</h2>
-			<h3>${fail}</h3>
-			<h1>Welcome to Student Login Page</h1>
-		</header>
+		<div class="glass-card" style="max-width: 500px; margin: 0 auto;">
+			<header>
+				<h2 id="msg-pass">${pass}</h2>
+				<h3 id="msg-fail">${fail}</h3>
+				<h1>Student Login</h1>
+				<p style="text-align: center; color: var(--text-muted); margin-bottom: 2rem;">Access your dashboard and take tests</p>
+			</header>
 
-		<div id="login">
-			<form action="/student/login" method="post">
-				<label for="email">Email:</label> <input type="text" id="email"
-					name="email"> <label for="password">Password:</label> <input
-					type="password" id="password" name="password">
-				<button type="submit">Login</button>
-				<a id="forgot-password" href="/student/forgot-password">Forgot Password?</a>
-				<hr>
-				 <a id="signup"
-					href="/student/signup">Create New Account</a>
-			</form>
+			<div id="login">
+				<form action="/student/login" method="post">
+					<div class="form-group">
+						<label for="email">Email Address</label>
+						<input type="email" id="email" name="email" placeholder="Enter your email" required>
+					</div>
+					<div class="form-group">
+						<label for="password">Password</label>
+						<input type="password" id="password" name="password" placeholder="••••••••" required>
+					</div>
+					<button type="submit" class="btn btn-primary" style="width: 100%;">Login to Account</button>
+					<a class="link" href="/student/forgot-password">Forgot Password?</a>
+					<hr style="border: 0; border-top: 1px solid var(--glass-border); margin: 1rem 0;">
+					<a class="btn btn-secondary" href="/student/signup" style="width: 100%;">Create New Account</a>
+				</form>
+			</div>
+			<div style="text-align: center; margin-top: 2rem;">
+				<a class="link" href="/">← Back to Home</a>
+			</div>
 		</div>
-		<a id="back" href="/">Back</a>
 	</div>
 
 	<footer>
-		<p class="copyright">©Saish</p>
+		<p>&copy; 2026 Quiz Platform. Built with passion by Saish.</p>
 	</footer>
 	<script>
 		setTimeout(function() {
-			var h2 = document.querySelector('h2');
-			var h3 = document.querySelector('h3');
-			if (h2 && h3) {
-				h2.style.display = 'none';
-				h3.style.display = 'none';
-			}
-		}, 1000);
+			const passMsg = document.getElementById('msg-pass');
+			const failMsg = document.getElementById('msg-fail');
+			if (passMsg) passMsg.style.display = 'none';
+			if (failMsg) failMsg.style.display = 'none';
+		}, 3000);
 	</script>
 </body>
+</html>

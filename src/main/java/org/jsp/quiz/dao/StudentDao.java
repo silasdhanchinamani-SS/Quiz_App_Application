@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
+@SuppressWarnings("null")
 public class StudentDao {
 
 	@Autowired

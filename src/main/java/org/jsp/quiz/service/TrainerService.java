@@ -59,7 +59,7 @@ public class TrainerService {
 			map.put("pass", "Link Sent Success, CLick on Link to Create Account");
 			return "TrainerLogin";
 		} else {
-			if (trainer1 == trainer2) {
+			if (trainer1 != null && trainer1 == trainer2) {
 				if (trainer1.isVerified()) {
 					map.put("fail", "Account Already Exists with the above Email and Mobile");
 					map.put("trainer", trainer1);

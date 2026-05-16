@@ -14,6 +14,7 @@ import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 
 @Service
+@SuppressWarnings("null")
 public class SendMailLogic {
 
 	@Autowired

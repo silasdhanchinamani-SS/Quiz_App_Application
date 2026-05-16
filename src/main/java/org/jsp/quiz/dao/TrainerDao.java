@@ -20,6 +20,7 @@ import org.springframework.stereotype.Repository;
 import jakarta.validation.Valid;
 
 @Repository
+@SuppressWarnings("null")
 public class TrainerDao {
 
 	@Autowired
