@@ -39,6 +39,12 @@ public class TrainerService {
 	@Autowired
 	StudentDao studentDao;
 
+	@org.springframework.beans.factory.annotation.Value("${server.host}")
+	String host;
+
+	@org.springframework.beans.factory.annotation.Value("${server.port}")
+	int port;
+
 	public String signup(@Valid Trainer trainer, MultipartFile pic, ModelMap map)
 			throws IOException, MessagingException {
 		Trainer trainer1 = trainerDao.findByEmail(trainer.getEmail());
@@ -54,7 +60,7 @@ public class TrainerService {
 
 			trainerDao.save(trainer);
 
-			// mailLogic.sendMail(trainer);
+			mailLogic.sendMail(trainer);
 
 			map.put("pass", "Link Sent Success, CLick on Link to Create Account");
 			return "TrainerLogin";
@@ -119,8 +125,14 @@ public class TrainerService {
 						map.put("fail", "Invalid Password");
 				} else
 					map.put("fail", "Wait for Admins Approval");
-			} else
+			} else {
+				String url = host + port + "/trainer/verify-link/" + trainer.getId() + "/" + trainer.getToken();
+				System.out.println("---------------- UNVERIFIED LOGIN ATTEMPT ----------------");
+				System.out.println("Trainer " + trainer.getName() + " is not verified yet!");
+				System.out.println("Verification URL: " + url);
+				System.out.println("----------------------------------------------------------");
 				map.put("fail", "First Verify Email");
+			}
 		}
 		return "TrainerLogin";
 	}
@@ -132,7 +144,7 @@ public class TrainerService {
 			return "TrainerForgotPassword";
 		} else {
 			trainer.setToken("xyz" + new Random().nextInt() + "pqr");
-			// mailLogic.reSendLink(trainer);
+			mailLogic.reSendLink(trainer);
 			trainerDao.save(trainer);
 			map.put("pass", "Reset Link Sent Success Click that link to Reset Password");
 			return "TrainerLogin";

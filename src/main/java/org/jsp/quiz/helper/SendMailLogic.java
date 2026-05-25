@@ -30,7 +30,7 @@ public class SendMailLogic {
 		MimeMessage message = mailSender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(message);
 
-		helper.setFrom("saishkulkarni7@gmail.com", "Quiz App");
+		helper.setFrom("silas.d.hanchinamani@gmail.com", "Quiz App");
 		helper.setTo(student.getEmail());
 		helper.setSubject("Otp Verification");
 		String gender = null;
@@ -42,14 +42,23 @@ public class SendMailLogic {
 				+ "</h1><h2>Your OTP for Creating Account is : " + student.getOtp()
 				+ "</h2><h3>Thank you, Regards</h3><h1>Quiz App Jspiders</h1></body></html>";
 		helper.setText(body, true);
-		mailSender.send(message);
+		System.out.println("---------------- EMAIL OUTBOX ----------------");
+		System.out.println("To: " + student.getEmail());
+		System.out.println("Subject: Otp Verification");
+		System.out.println("Body: Hello " + gender + student.getName() + ", Your OTP for Creating Account is : " + student.getOtp());
+		System.out.println("----------------------------------------------");
+		try {
+			mailSender.send(message);
+		} catch (Exception e) {
+			System.err.println("Email delivery failed: " + e.getMessage());
+		}
 	}
 
 	public void reSendMail(Student student) throws MessagingException, UnsupportedEncodingException {
 		MimeMessage message = mailSender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(message);
 
-		helper.setFrom("saishkulkarni7@gmail.com", "Quiz App");
+		helper.setFrom("silas.d.hanchinamani@gmail.com", "Quiz App");
 		helper.setTo(student.getEmail());
 		helper.setSubject("Otp Verification");
 		String gender = null;
@@ -61,14 +70,23 @@ public class SendMailLogic {
 				+ "</h1><h2>Your OTP for Resetting Password is : " + student.getOtp()
 				+ "</h2><h3>Thank you, Regards</h3><h1>Quiz App Jspiders</h1></body></html>";
 		helper.setText(body, true);
-		mailSender.send(message);
+		System.out.println("---------------- EMAIL OUTBOX ----------------");
+		System.out.println("To: " + student.getEmail());
+		System.out.println("Subject: Otp Verification");
+		System.out.println("Body: Hello " + gender + student.getName() + ", Your OTP for Resetting Password is : " + student.getOtp());
+		System.out.println("----------------------------------------------");
+		try {
+			mailSender.send(message);
+		} catch (Exception e) {
+			System.err.println("Email delivery failed: " + e.getMessage());
+		}
 	}
 
 	public void sendMail(Trainer trainer) throws MessagingException, UnsupportedEncodingException {
 		MimeMessage message = mailSender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(message);
 
-		helper.setFrom("saishkulkarni7@gmail.com", "Quiz App");
+		helper.setFrom("silas.d.hanchinamani@gmail.com", "Quiz App");
 		helper.setTo(trainer.getEmail());
 		helper.setSubject("Verification Link");
 
@@ -84,14 +102,23 @@ public class SendMailLogic {
 				+ "</h1><h2>Your Verification link is : <a href='" + url
 				+ "'>Click here to Verify</a></h2><h3>Thank you, Regards</h3><h1>Quiz App Jspiders</h1></body></html>";
 		helper.setText(body, true);
-		mailSender.send(message);
+		System.out.println("---------------- EMAIL OUTBOX ----------------");
+		System.out.println("To: " + trainer.getEmail());
+		System.out.println("Subject: Verification Link");
+		System.out.println("Body: Hello " + gender + trainer.getName() + ", Your verification URL is: " + url);
+		System.out.println("----------------------------------------------");
+		try {
+			mailSender.send(message);
+		} catch (Exception e) {
+			System.err.println("Email delivery failed: " + e.getMessage());
+		}
 	}
 
 	public void reSendLink(Trainer trainer) throws UnsupportedEncodingException, MessagingException {
 		MimeMessage message = mailSender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(message);
 
-		helper.setFrom("saishkulkarni7@gmail.com", "Quiz App");
+		helper.setFrom("silas.d.hanchinamani@gmail.com", "Quiz App");
 		helper.setTo(trainer.getEmail());
 		helper.setSubject("Reset Password Link");
 
@@ -107,7 +134,16 @@ public class SendMailLogic {
 				+ "</h1><h2>Your Password Reset link is : <a href='" + url
 				+ "'>Click here to Reset</a></h2><h3>Thank you, Regards</h3><h1>Quiz App Jspiders</h1></body></html>";
 		helper.setText(body, true);
-		mailSender.send(message);
+		System.out.println("---------------- EMAIL OUTBOX ----------------");
+		System.out.println("To: " + trainer.getEmail());
+		System.out.println("Subject: Reset Password Link");
+		System.out.println("Body: Hello " + gender + trainer.getName() + ", Your password reset URL is: " + url);
+		System.out.println("----------------------------------------------");
+		try {
+			mailSender.send(message);
+		} catch (Exception e) {
+			System.err.println("Email delivery failed: " + e.getMessage());
+		}
 	}
 
 }
